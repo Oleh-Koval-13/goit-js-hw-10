@@ -51,7 +51,6 @@ function startTheTimer(event) {
         const { days, hours, minutes, seconds } = differenceInTime;
 
 
-
         if (days < 0 && hours < 0 && minutes < 0 && seconds < 0) {
             clearInterval(intervalId);
             startBtn.disabled = false;
