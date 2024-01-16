@@ -38,14 +38,12 @@ flatpickr("#datetime-picker", options);
 startBtn.addEventListener('click', startTheTimer);
 
 function startTheTimer(event) {
-    makeDisableBtn();
-    event.target.removeEventListener('click', startTheTimer);
+    startBtn.disabled = true;
+    startBtn.addEventListener('click', startTheTimer);
 
     let userSelectedDateInMs = userSelectedDate.getTime();
-    let clickedTime = new Date();
+    let clickedTime = new Date().getTime();
 
-    userSelectedDateInMs = Math.ceil(userSelectedDateInMs / 1000) * 1000;
-    clickedTime = Math.ceil(clickedTime / 1000) * 1000;
 
     const intervalId = setInterval(() => {
         const differenceInTime = convertMs(userSelectedDateInMs - clickedTime);
@@ -56,7 +54,7 @@ function startTheTimer(event) {
 
         if (days < 0 && hours < 0 && minutes < 0 && seconds < 0) {
             clearInterval(intervalId);
-            event.target.addEventListener('click', startTheTimer);
+            startBtn.disabled = false;
         } else {
             daysTimer.innerHTML = pad(days);
             hoursTimer.innerHTML = pad(hours);
@@ -65,7 +63,7 @@ function startTheTimer(event) {
 
         }
 
-        userSelectedDateInMs = userSelectedDateInMs - 1000;
+        clickedTime = new Date().getTime();
     }, 1000);
 }
 
